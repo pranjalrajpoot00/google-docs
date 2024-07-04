@@ -2,11 +2,15 @@ const mongoose = require("mongoose");
 const Document = require("./Document");
 const { dotenv } = require("dotenv").config();
 
-mongoose.connect(process.env.DATABASE, {});
-const PORT = process.env.PORT || 8000;
+mongoose.connect(process.env.MONGODB_URI, {})
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+
+const PORT = 8000;
 
 const io = require("socket.io")(PORT, {
-  cors: {
+  cors: { 
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
   },
